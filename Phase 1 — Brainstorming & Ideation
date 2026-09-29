@@ -1,0 +1,33 @@
+1.1 Problem Statement
+Creating a comic requires three distinct skills: writing a story, laying out panels, and illustrating them. Non-artists drop out at the illustration step, which is the least forgiving of the three. Existing tools solve only one part of the problem — text generators produce scripts but no panels, and image generators produce single pictures with no narrative continuity between them.
+
+1.2 Brainstormed Ideas
+#	Idea	Description
+1	Text-only comic script generator	LLM writes a panel script; user illustrates it themselves
+2	Image-only generator with manual captions	User generates images and types captions into a template
+3	Single-model story + image tool	One model handles both text and imagery
+4	Two-LLM + diffusion pipeline	Flash outlines, Pro narrates, Stable Diffusion illustrates
+5	Interactive panel editor	Pipeline plus drag-and-drop panel rearrangement and caption rewriting
+6	Community comic library	Shared gallery of generated comics with public profiles
+7	Multi-page arc generator	Long-form comics across several issues with character memory
+1.3 Prioritisation Criteria
+Impact on the core illustration barrier · implementation effort · dependency on external APIs · fit with the five-milestone plan · risk.
+
+1.4 Idea Prioritisation Matrix
+Idea	Solves illustration barrier	Effort	API dependency	Risk	Priority
+Two-LLM + diffusion pipeline	High	Medium	Medium	Medium	1
+Interactive panel editor	High	High	Low	Low	2 — later phase
+Image-only + manual captions	Partial	Low	Low	Low	3
+Text-only script generator	None	Low	Low	Low	4
+Multi-page arc generator	High	High	High	High	5
+Community comic library	Low	High	Medium	Medium	6
+Single-model story + image	Medium	Low	Medium	High	7
+1.5 Prioritisation Outcome
+Idea 4 sits first. It removes the illustration barrier outright at moderate effort, and splitting outline generation from narration generation is what makes the output feel coherent — a structured 5-panel skeleton constrains the story model so narration stays anchored to the panels instead of drifting into prose. That structural insight costs nothing extra in infrastructure, which is why it beats the higher-scope ideas on value-per-effort.
+
+Idea 2 is deliberately deferred, not dropped. The modular service design (each pipeline stage in its own file) is what keeps it reachable in a later version.
+
+Ideas 3 and 7 were rejected. No current model handles both text and imagery well enough to justify collapsing the pipeline, and long-form arcs multiply API cost and failure surface before the single-comic case is proven.
+
+1.6 Key Ideation Insight
+The bottleneck in comic creation is not creativity — it is execution skill. Users arrive with the story already in mind. The product's job is therefore to accept a rough premise plus preference fields and return something finished, not to help the user write.
