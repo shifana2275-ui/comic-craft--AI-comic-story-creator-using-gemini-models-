@@ -1,0 +1,74 @@
+2.1 Purpose and Scope
+This phase fixes exactly what ComicCraft must do before code is written, so every requirement traces to a module and a test case.
+
+In scope for v1: one comic per request, five panels, one browser session, local deployment, PDF export.
+
+Out of scope for v1: user accounts, saved comic libraries, multi-page arcs, cloud deployment, collaborative editing.
+
+2.2 Stakeholders
+Stakeholder	Interest
+Casual user / non-artist	Wants a finished comic from a one-line idea without drawing skill
+Storyteller / hobbyist	Wants to iterate on tone and art style until it matches their vision
+API consumer	Wants programmatic generation via structured JSON
+Developer / maintainer	Wants swappable models and isolated per-stage failure
+2.3 Functional Requirements
+ID	Requirement	Source	Verified by
+FR1	Accept story prompt, character name, setting, tone, art style via HTML form	Scenario 1	T1, T3
+FR2	Accept the same five fields as a JSON payload	Activity 2.2	T4, T5
+FR3	Generate a structured 5-panel outline: number, title, scene, image prompt	gemini_flash.py	T1
+FR4	Expand the outline into caption, narration and dialogue per panel	gemini_pro.py	T1
+FR5	Generate one comic-style illustration per panel	image_generator.py	T1, T6
+FR6	Sanitise the image prompt into a filesystem-safe filename	image_generator.py	T6
+FR7	Bind each panel's title, image and text into one layout structure	layout_builder.py	T1
+FR8	Compile the layout into a multi-page PDF, one panel per page, timestamped filename	exporters.py	T7, T10
+FR9	Render the comic panel-by-panel on a preview page	Scenario 3	T1
+FR10	Show a success page after export with a return-to-home link	Scenario 3	T7
+FR11	Re-run the entire pipeline when tone or art style changes	Scenario 2	T2
+FR12	Expose image generation standalone for developer testing	/test-image	T6
+FR13	Isolate a single panel's image failure so remaining panels still render	Risk register	T8
+FR14	Surface a clear error on invalid API key without emitting a partial PDF	Security	T9
+2.4 Non-Functional Requirements
+ID	Category	Requirement
+NFR1	Performance	Outline generation must feel interactive; total latency dominated by five sequential diffusion calls
+NFR2	Modularity	Each pipeline stage in its own module; a model swap must not require editing other stages
+NFR3	Fault isolation	One panel's failure must not abort the comic
+NFR4	Portability	Runs locally under Uvicorn with no cloud dependency
+NFR5	Security	API keys read from environment variables only; .env never committed
+NFR6	Reliability	Per-panel retry with backoff on rate limits
+NFR7	Usability	A non-technical user completes a comic without instruction
+2.5 External Interface Requirements
+Form inputs — story_prompt, character_name, setting (school / forest / space / city), tone (light-hearted / dramatic / poetic / funny), art_style (anime / pixel art / comic book / realistic), POSTed to /generate.
+
+Routes
+
+Route	Method	Input	Output
+/	GET	—	index.html
+/generate	POST form	Five fields	comic_preview.html
+/generate-comic/json	POST JSON	PromptRequest	JSON layout + PDF path
+/export-success	GET	PDF path	export_success.html
+/test-image	POST	Prompt string	Saved image path
+Data contracts
+
+python
+
+
+# generate_outline() returns
+[{"panel": int, "title": str, "scene": str, "image_prompt": str}, ...]
+
+# generate_story() returns
+str   # "Panel N: <title>\nCaption: ...\nNarration: ..." repeated per panel
+
+# build_comic_layout() returns
+[{"panel": int, "image": "static/panels/panel_N_<slug>.png", "text": str}, ...]
+2.6 Assumptions and Dependencies
+Gemini API key with quota for at least two calls per comic (Flash + Pro).
+PyTorch-capable hardware for Stable Diffusion; CPU inference works but is slow.
+Diffusers and runwayml/stable-diffusion-v1-5 weights downloadable at first run.
+Python 3.10+, FastAPI, Uvicorn, Jinja2, FPDF, Pillow, python-multipart, python-dotenv.
+2.7 Constraints
+Latency floor — five sequential diffusion calls set the minimum wait.
+No persistence — a refresh loses the comic.
+Single comic per request — no multi-chapter support.
+Local-only — no auth layer, so the JSON route must not be exposed publicly as-is.
+2.8 Acceptance Criteria
+A user submits the fox/enchanted-forest prompt with tone dramatic and style anime and receives five distinct panels with readable narration; resubmitting as funny + comic book produces a visibly different comic; download yields a timestamped PDF with one panel per page and lands on the success page; a forced single-panel failure still returns the remaining four.
