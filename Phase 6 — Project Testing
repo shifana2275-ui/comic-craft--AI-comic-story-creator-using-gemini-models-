@@ -1,0 +1,20 @@
+6.1 Test Cases
+ID	Scenario	Expected Result
+T1	Submit form with all five fields	Preview page with 5 panels rendered
+T2	Tone = funny, style = comic book	Regenerated pipeline with lighter narration and comic-book visuals
+T3	Submit with empty story prompt	Validation error; no pipeline run
+T4	POST valid JSON to /generate-comic/json	JSON body with layout array and PDF path
+T5	POST malformed JSON	Handled gracefully; no stack trace to client
+T6	/test-image with custom prompt	Image saved under static/panels/; path returned
+T7	Click "Download Your Comic as PDF"	PDF downloaded with timestamped filename
+T8	One panel's image generation fails	Remaining panels still render; failure logged
+T9	Invalid Gemini API key	Clear error surfaced; no partial PDF
+T10	Run the same input twice	Two distinct timestamped PDFs; no overwrite
+6.2 Verification Results
+T1–T10 pass on local deployment. T8 is the failure mode that drove the per-panel isolation design — an unisolated failure previously aborted the entire comic.
+
+6.3 Observed Limitations
+Total latency is dominated by the five sequential diffusion calls. Generation runs panel-by-panel rather than batched, which keeps memory bounded but lengthens wall-clock time. CPU-only runs are functional but slow enough to degrade the preview experience.
+
+6.4 Test Environment
+Local machine, Python 3.10+, Uvicorn with hot reload, Chrome and Firefox, 127.0.0.1:8000.
