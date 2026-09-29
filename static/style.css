@@ -1,0 +1,163 @@
+:root {
+  --ink: #241b33;
+  --accent: #ff5d5d;
+  --accent-dark: #d6413f;
+  --paper: #fffaf0;
+  --panel-bg: #ffffff;
+  --border: #241b33;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, #ffe8d6 0%, #ffd6cc 100%);
+  min-height: 100vh;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px 16px;
+}
+
+.card {
+  background: var(--paper);
+  border: 3px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 8px 8px 0 var(--border);
+  padding: 36px 40px;
+  max-width: 560px;
+  width: 100%;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2.4rem;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  margin-bottom: 24px;
+  opacity: 0.8;
+}
+
+.comic-form label {
+  display: block;
+  font-weight: bold;
+  margin: 14px 0 6px;
+}
+
+.comic-form textarea,
+.comic-form input,
+.comic-form select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-field {
+  flex: 1;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-block;
+  margin-top: 20px;
+  margin-right: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 2px solid var(--border);
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+.btn-secondary {
+  background: #fff;
+  color: var(--ink);
+}
+
+.btn-secondary:hover { transform: translateY(-2px); }
+
+.hint {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* Comic preview page */
+.preview-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+.preview-page h1 {
+  text-align: center;
+}
+
+.panel-card {
+  background: var(--panel-bg);
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 var(--border);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+
+.panel-image {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  margin: 10px 0;
+}
+
+.panel-image-missing {
+  padding: 40px;
+  text-align: center;
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  margin: 10px 0;
+  opacity: 0.7;
+}
+
+.scene-description { opacity: 0.85; }
+.caption { font-style: italic; opacity: 0.75; }
+.narration { font-size: 1.05rem; }
+.image-prompt-ref {
+  font-size: 0.8rem;
+  opacity: 0.55;
+  border-top: 1px dashed #ccc;
+  padding-top: 8px;
+}
+
+.actions {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.success-card {
+  text-align: center;
+}
