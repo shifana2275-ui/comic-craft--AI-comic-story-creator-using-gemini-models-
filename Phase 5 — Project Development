@@ -1,0 +1,36 @@
+5.1 Environment Setup
+bash
+
+
+python -m venv comiccraft-env
+comiccraft-env\Scripts\activate      # Windows
+source comiccraft-env/bin/activate    # macOS/Linux
+
+pip install fastapi uvicorn jinja2 python-multipart google-generativeai \
+            diffusers transformers fpdf Pillow accelerate python-dotenv
+5.2 Environment Variables
+.env.example
+
+
+
+GEMINI_API_KEY=your_gemini_api_key_here
+HF_API_KEY=your_huggingface_api_key_here
+5.3 Running the Application
+bash
+
+
+uvicorn app.main:app --reload
+# app:  [127.0.0.1](http://127.0.0.1:8000)
+# docs: [127.0.0.1](http://127.0.0.1:8000/docs)
+5.4 Route Summary
+Route	Method	Purpose
+/	GET	Renders index.html
+/generate	POST (form)	Full pipeline → comic_preview.html
+/generate-comic/json	POST (JSON)	Full pipeline → JSON layout + PDF path
+/export-success	GET	Renders export_success.html
+/test-image	POST	Direct image generation for isolated testing
+5.5 Development Notes
+Each service function is independently callable — that is precisely why /test-image exists: it verifies the diffusion stage without spending Gemini quota.
+generate_image() sanitises the prompt into a safe filename, so panel paths are reproducible and filesystem-safe.
+save_pdf() places one panel per page, image above narration, so printed output stays readable.
+Error handling uses FastAPI's HTTPException plus try-except blocks covering API failures and JSON decode errors.
