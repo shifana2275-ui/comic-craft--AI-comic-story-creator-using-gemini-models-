@@ -1,0 +1,24 @@
+4.1 Milestone Plan
+Milestone	Activity	Deliverable
+M1 — Model selection & architecture	Research models; define architecture; set up environment	Model decision doc, architecture diagram, virtualenv
+M2 — Core functionality	Build the five service functions; build FastAPI backend	Working pipeline in isolation, wired routes
+M3 — routes.py development	Define and implement all routes	Five routes operational
+M4 — Frontend	Build UI; wire Jinja2 templates	Three working templates
+M5 — Deployment	Local deployment prep and verification	App running end-to-end on 127.0.0.1:8000
+4.2 Sequencing Logic
+The pipeline is built bottom-up: each service function is verified in isolation — via /test-image for the image stage — before being chained into a route. A failure during route integration is then a wiring bug, not a model bug, which cuts debugging time sharply.
+
+4.3 Risk Register
+Risk	Impact	Mitigation
+Stable Diffusion too slow on CPU	Poor UX on non-GPU machines	Fewer inference steps, smaller resolution, or offload to HF Inference API
+Gemini returns malformed JSON	Pipeline crash at parse step	Request JSON mode explicitly; wrap parse in try/except with a repair pass
+Panel images stylistically inconsistent	Comic feels disjointed	Shared style suffix appended to every panel prompt
+API rate limits during a 5-panel run	Partial comic	Retry with backoff per panel; isolate failures
+Keys committed to repo	Credential leak	.env in .gitignore; ship .env.example
+4.4 Estimated Effort
+Phase	Relative effort
+Environment and architecture	Low
+Core service functions	High
+Routes and orchestration	Medium
+Frontend templates	Medium
+Deployment and verification	Low
