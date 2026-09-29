@@ -1,0 +1,15 @@
+7.1 Project Summary
+ComicCraft is a FastAPI web application that turns a one-line story idea plus four preference fields into a complete illustrated comic with downloadable PDF export. It combines two Gemini models — Flash for structured outlining, Pro for creative narration — with Stable Diffusion for panel art.
+
+7.2 Scenarios
+Personalised comic. A user enters "A brave fox exploring an enchanted forest" with character name, setting forest, tone dramatic, style anime. Flash produces the 5-panel outline, Pro writes the narration, Stable Diffusion renders each panel, and the user reviews the comic on the preview page.
+Style iteration. The user switches tone to funny and style to comic book. The whole pipeline re-runs — outline, story and images — producing a visibly different comic from the same premise.
+Export. The user reviews the preview and downloads the comic: layout_builder.py binds each panel's title, image and text; exporters.py compiles them into a timestamped PDF via FPDF; the user lands on the export success page.
+7.3 Prerequisites
+FastAPI · Uvicorn · Python · HTML/CSS/Jinja2 · Google Generative AI SDK · Hugging Face Diffusers · PyTorch · FPDF · Git · virtualenv.
+
+7.4 Limitations and Future Scope
+The current version handles single-comic generation without accounts. The modular architecture leaves room for user profiles, comic libraries, multi-page arcs, an interactive panel editor and cloud deployment.
+
+7.5 Conclusion
+ComicCraft demonstrates an end-to-end AI creative pipeline: outline, narration, illustration, layout, export. Splitting storytelling across two models with different strengths, and isolating each pipeline stage in its own module, keeps the application both coherent in output and cheap to modify. The larger point is that the illustration barrier — the step that stops most non-artists — can be removed entirely while keeping the creative decisions with the user.
