@@ -1,10 +1,10 @@
 # Phase 4: Project Planning
 
 ## Team Structure & Roles
-- **Lokesh P (Lead):** Core architecture, FastAPI backend, Gemini API integration, and Render cloud deployment.
-- **Dharan kumar:** Requirement validation, workflow analysis, and project planning.
-- **Muniyappan:** Frontend UI layout, styling review, and component testing.
-- **Muthukumaran:** Project documentation, Kanban task organization, and submission auditing.
+- **Shifana R (Lead):** Core architecture, FastAPI backend, Gemini API integration, and Render cloud deployment.
+- **Harini S:** Requirement validation, workflow analysis, and project planning.
+- **Janani G:** Frontend UI layout, styling review, and component testing.
+
 
 ## Milestones & Timeline
 - Milestone 1: Environment setup and API key validation.
@@ -16,7 +16,7 @@
 
 
 - *Date:* 29 September 2026
-- *Team ID:* 08
+- *Team ID:* 03
 - *Project Name:* ComicCraft - Al Comic Story Creator using Gemini Models
 - *Maximum Marks:* 3 Marks
 
@@ -26,7 +26,7 @@
 
 | S.No | Team Member | Idea / Suggestion | Category | Group No. |
 |------|-------------|-------------------|----------|-----------|
-| 1 | Lokesh | Multimodal receipt image parsing using Google Gemini 1.5 Flash API | AI Architecture & Vision | Group 08 |
-| 2 | Dharan kumar| Automated line-item expense categorization and tax breakdown | Data Processing & Logic | Group 08 |
-| 3 | Muniyappan | Dynamic Jinja2 web interface for intuitive mobile and desktop uploads | Frontend & UI/UX | Group 08 |
-| 4 | Muthukumar | Budget threshold alerting and smart savings recommendations engine | Business Logic & Rules | Group 08 |
+| 1 | Shifana R | Multimodal receipt image parsing using Google Gemini 1.5 Flash API | AI Architecture & Vision | Group 03 |
+| 2 | Harini S| Automated line-item expense categorization and tax breakdown | Data Processing & Logic | Group 03 |
+| 3 | Janani G| Dynamic Jinja2 web interface for intuitive mobile and desktop uploads | Frontend & UI/UX | Group 03 |
+
