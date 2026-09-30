@@ -3,7 +3,7 @@
 ## Local Setup Instructions
 1. Clone the repository:
    ```bash
-   git clone 
+   git clone https://github.com/shifana2275-ui/comic-craft--AI-comic-story-creator-using-gemini-models-/blob/main/Project_Phases/Phase_7_Project_Documentation.md
    
 
 
